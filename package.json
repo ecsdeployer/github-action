@@ -1,0 +1,48 @@
+{
+  "name": "setup-deployer-action",
+  "description": "GitHub Action for Cloud87 Deployer, a deployment automation tool for Fargate services",
+  "main": "lib/main.js",
+  "scripts": {
+    "build": "ncc build src/main.ts --source-map --minify --license licenses.txt",
+    "lint": "eslint src/**/*.ts __tests__/**/*.ts",
+    "format": "eslint --fix src/**/*.ts __tests__/**/*.ts",
+    "test": "jest --coverage",
+    "all": "yarn run build && yarn run format && yarn test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cloud87io/deployer-action.git"
+  },
+  "keywords": [
+    "actions",
+    "cloud87"
+  ],
+  "author": "Mitch Dempsey",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.9.1",
+    "@actions/exec": "^1.1.1",
+    "@actions/http-client": "^2.0.1",
+    "@actions/tool-cache": "^2.0.1",
+    "js-yaml": "^4.1.0",
+    "yargs": "^17.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.26",
+    "@types/semver": "^7.3.12",
+    "@typescript-eslint/eslint-plugin": "^5.14.0",
+    "@typescript-eslint/parser": "^5.14.0",
+    "@vercel/ncc": "^0.33.3",
+    "dotenv": "^16.0.0",
+    "eslint": "^8.11.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jest": "^26.1.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.2.5",
+    "prettier": "^2.3.1",
+    "tmp": "^0.2.1",
+    "ts-jest": "^27.1.2",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.4.4"
+  }
+}

@@ -1,0 +1,31 @@
+# https://help.github.com/en/articles/metadata-syntax-for-github-actions
+name: 'Cloud87 ECS Deployer Action'
+description: 'GitHub Action for Cloud87 ECS Deployer, a tool to easily deploy applications to AWS ECS'
+author: 'cloud87'
+branding:
+  color: 'green'
+  icon: 'cloud'
+
+inputs:
+  deployer-version:
+    description: 'Cloud87 ECS Deployer version'
+    default: 'latest'
+    required: false
+  args:
+    description: 'Arguments to pass to the deployer command'
+    required: false
+  config:
+    description: 'Deployment YML file for the project'
+    required: true
+  workdir:
+    description: 'Working directory (below repository root)'
+    default: '.'
+    required: false
+  install-only:
+    description: 'Just install Cloud87 ECS Deployer'
+    default: 'false'
+    required: false
+
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
