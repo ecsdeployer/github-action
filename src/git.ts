@@ -16,7 +16,7 @@ const git = async (args: string[] = []): Promise<string> => {
 export async function getTag(): Promise<string> {
   try {
     if ((process.env.GITHUB_REF || '').startsWith('refs/tags')) {
-      const tag = (process.env.GITHUB_REF || '').split('/').pop();
+      const tag = (process.env.GITHUB_REF || '').split('/').pop()
       if (tag !== '' && tag !== undefined) {
         return tag
       }
@@ -34,15 +34,6 @@ export async function getTag(): Promise<string> {
   }
 }
 
-export async function isTagDirty(currentTag: string): Promise<boolean> {
-  try {
-    await git(['describe', '--exact-match', '--tags', '--match', currentTag])
-  } catch (err) {
-    return true
-  }
-  return false
-}
-
-export async function getShortCommit(): Promise<string> {
+export async function getShortCommit() {
   return await git(['show', "--format='%h'", 'HEAD', '--quiet'])
 }

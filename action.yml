@@ -3,23 +3,33 @@ name: 'Cloud87 ECS Deployer Action'
 description: 'GitHub Action for Cloud87 ECS Deployer, a tool to easily deploy applications to AWS ECS'
 author: 'cloud87'
 branding:
-  color: 'green'
+  color: 'blue'
   icon: 'cloud'
 
 inputs:
   deployer-version:
-    description: 'Cloud87 ECS Deployer version'
+    description: 'The version of Cloud87 ECS Deployer to run using'
     default: 'latest'
     required: false
-  args:
-    description: 'Arguments to pass to the deployer command'
+  tag:
+    description: "Value for --tag"
+    required: false
+  app-version:
+    description: "Value for --app-version"
+    required: false
+  extra-args:
+    description: 'Additional arguments to pass to the deployer command'
     required: false
   config:
     description: 'Deployment YML file for the project'
-    required: true
+    required: false
   workdir:
     description: 'Working directory (below repository root)'
     default: '.'
+    required: false
+  timeout:
+    description: 'Override the default timeout'
+    default: '90m'
     required: false
   install-only:
     description: 'Just install Cloud87 ECS Deployer'

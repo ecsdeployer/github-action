@@ -4,14 +4,23 @@ import * as git from './git'
 import * as deployer from './deployer'
 import * as core from '@actions/core'
 // import * as exec from '@actions/exec'
-// import * as fs from 'fs'
+import * as fs from 'fs'
+import { InputNames } from './types'
 // import yargs from 'yargs'
 
 async function run() {
   try {
+
+    // check workdir before doing anything at all
+    const workDir = core.getInput(InputNames.WorkDir) || '.'
+    if (workDir && workDir !== '.') {
+      core.info(`Using ${workDir} as working directory`)
+      process.chdir(workDir)
+    }
+
     const inputs = await context.getInputs()
     const bin = await deployer.install(inputs.deployerVersion)
-    core.info(`Cloud87Deployer ${inputs.deployerVersion} installed successfully`)
+    core.info(`ECSDeployer ${inputs.deployerVersion} installed successfully`)
 
     if (inputs.installOnly) {
       const deployerDir = path.dirname(bin)
@@ -23,14 +32,15 @@ async function run() {
       return
     }
 
-    if (inputs.workdir && inputs.workdir !== '.') {
-      core.info(`Using ${inputs.workdir} as working directory`)
-      process.chdir(inputs.workdir)
-    }
 
     const commit = await git.getShortCommit()
     const tag = await git.getTag()
     // const isTagDirty = await git.isTagDirty(tag)
+
+    // ensure config file exists
+    if(!fs.existsSync(inputs.configPath)) {
+      throw new Error(`Configuration file '${inputs.configPath}' does not exist`)
+    }
 
     // let yamlfile: string | unknown;
     // const argv = yargs.parse(inputs.args)

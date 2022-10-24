@@ -4,7 +4,8 @@ import * as context from './context'
 import * as github from './github'
 import * as core from '@actions/core'
 import * as tc from '@actions/tool-cache'
-import { DEPLOYER_ASSET_PREFIX, DEPLOYER_BIN, RELEASE_DOWNLOAD_URL } from './constants'
+import { DEPLOYER_ASSET_PREFIX, DEPLOYER_BIN, DEPLOYER_REPO } from './constants'
+import { isPresent } from './util'
 
 export async function install(version: string): Promise<string> {
   const release = await github.getRelease(version)
@@ -12,12 +13,7 @@ export async function install(version: string): Promise<string> {
     throw new Error(`Cannot find ECS Deployer ${version} release`)
   }
 
-  const filename = getFilename()
-  const downloadUrl = util.format(
-    RELEASE_DOWNLOAD_URL,
-    release.tag_name,
-    filename
-  )
+  const downloadUrl = getDownloadUrl(release.tag_name)
 
   core.info(`Downloading ${downloadUrl}`)
   const downloadPath = await tc.downloadTool(downloadUrl)
@@ -39,6 +35,42 @@ export async function install(version: string): Promise<string> {
   core.debug(`Exe path is ${exePath}`)
 
   return exePath
+}
+
+export function deployerCommandArgs(inputs : context.Inputs) : string[] {
+
+  const cliArgs = [
+    "deploy",
+    "--config", inputs.configPath,
+  ]
+
+  if(isPresent(inputs.appVersion)) {
+    cliArgs.push("--app-version", inputs.appVersion)
+  }
+
+  if(isPresent(inputs.imageTag)) {
+    cliArgs.push("--image-tag", inputs.imageTag)
+  }
+
+  if(isPresent(inputs.timeout)) {
+    cliArgs.push("--timeout", inputs.timeout)
+  }
+
+  if(isPresent(inputs.args)) {
+    cliArgs.push(inputs.args)
+  }
+
+  return cliArgs
+}
+
+export function getDownloadUrl(releaseTag : string) {
+  const filename = getFilename()
+  return util.format(
+    "https://github.com/%s/releases/download/%s/%s",
+    DEPLOYER_REPO,
+    releaseTag,
+    filename
+  )
 }
 
 const getFilename = (): string => {
@@ -66,7 +98,7 @@ const getFilename = (): string => {
     arch = 'all'
   }
   const platform = context.osPlat == 'win32' ? 'windows' : context.osPlat == 'darwin' ? 'darwin' : 'linux'
-  let ext = context.osPlat == 'win32' ? 'zip' : 'tar.gz'
+  const ext = context.osPlat == 'win32' ? 'zip' : 'tar.gz'
 
   return util.format('%s_%s_%s.%s', DEPLOYER_ASSET_PREFIX, platform, arch, ext)
 }
