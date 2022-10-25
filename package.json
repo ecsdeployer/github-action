@@ -7,7 +7,7 @@
     "lint": "eslint src/**/*.ts __tests__/**/*.ts",
     "format": "eslint --fix src/**/*.ts __tests__/**/*.ts",
     "test": "jest --coverage",
-    "all": "yarn run build && yarn run format && yarn test"
+    "all": "npm run build && npm run format && npm test"
   },
   "repository": {
     "type": "git",
