@@ -48,8 +48,12 @@ export function deployerCommandArgs(inputs : context.Inputs) : string[] {
     cliArgs.push("--app-version", inputs.appVersion)
   }
 
+  if(isPresent(inputs.imageUri)) {
+    cliArgs.push("--image", inputs.imageUri)
+  }
+
   if(isPresent(inputs.imageTag)) {
-    cliArgs.push("--image-tag", inputs.imageTag)
+    cliArgs.push("--tag", inputs.imageTag)
   }
 
   if(isPresent(inputs.timeout)) {

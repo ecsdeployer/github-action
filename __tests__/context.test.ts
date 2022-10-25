@@ -12,35 +12,49 @@ describe('getInputs', () => {
     process.env = env
   })
 
-  it('require config', async () => {
-    await expect(getInputs()).rejects.toThrow(/must provide.+config/)
+  // it('require config', async () => {
+  //   await expect(getInputs()).rejects.toThrow(/must provide.+config/)
+  // });
+
+  describe('configPath', () => {
+    it('when missing', async () => {
+      expect((await getInputs()).configPath).toEqual(".ecsdeployer.yml")
+    });
+
+    it('when provided', async () => {
+      process.env.INPUT_CONFIG = "somefilepath.yml"
+      expect((await getInputs()).configPath).toEqual("somefilepath.yml")
+    });
+  });
+
+  describe('imageUri', () => {
+    it('when missing', async () => {
+      expect((await getInputs()).imageUri).toEqual("")
+    });
+
+    it('when provided', async () => {
+      process.env['INPUT_IMAGE'] = "xxximg"
+      expect((await getInputs()).imageUri).toEqual("xxximg")
+    });
   });
 
   describe('imageTag', () => {
     it('when missing', async () => {
-      process.env.INPUT_CONFIG = "something"
-      process.env.INPUT_STAGE = "something"
       expect((await getInputs()).imageTag).toEqual("")
     });
 
     it('when provided', async () => {
-      process.env.INPUT_CONFIG = "something"
-      process.env.INPUT_STAGE = "something"
-      process.env['INPUT_IMAGE-TAG'] = "xxxtag"
+      process.env.INPUT_TAG = "xxxtag"
       expect((await getInputs()).imageTag).toEqual("xxxtag")
     });
   });
 
   describe('appVersion', () => {
     it('when missing', async () => {
-      process.env.INPUT_CONFIG = "something"
-      process.env.INPUT_STAGE = "something"
       expect((await getInputs()).appVersion).toEqual("")
     });
 
     it('when provided', async () => {
-      process.env.INPUT_CONFIG = "something"
-      process.env.INPUT_STAGE = "something"
       process.env['INPUT_APP-VERSION'] = "xxxversion"
       expect((await getInputs()).appVersion).toEqual("xxxversion")
     });
@@ -48,27 +62,12 @@ describe('getInputs', () => {
 
   describe('args', () => {
     it('when missing', async () => {
-      process.env.INPUT_CONFIG = "something"
-      process.env.INPUT_STAGE = "something"
       expect((await getInputs()).args).toEqual("")
     });
 
     it('when provided', async () => {
-      process.env.INPUT_CONFIG = "something"
-      process.env.INPUT_STAGE = "something"
       process.env['INPUT_EXTRA-ARGS'] = "--test --thing"
       expect((await getInputs()).args).toEqual("--test --thing")
     });
   });
-
-  // it('gets the stage correctly from filename', async () => {
-  //   const inputs = await getInputs()
-  //   console.log("STUFF", osPlat, osArch, inputs)
-  // });
-
-  // it('installs', async () => {
-  //   const inputs = await getInputs()
-  //   const str = await install(inputs.deployerVersion)
-  //   console.log("INSTALL", str)
-  // });
 })

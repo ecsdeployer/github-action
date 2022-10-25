@@ -8,6 +8,6 @@ export interface GitHubRelease {
 
 export const getRelease = async (version: string): Promise<GitHubRelease | null> => {
   const url = `https://github.com/${DEPLOYER_REPO}/releases/${version}`
-  const http = new httpm.HttpClient('deployer-action')
+  const http = new httpm.HttpClient('ecsdeployer-action')
   return (await http.getJson<GitHubRelease>(url)).result
 }

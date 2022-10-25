@@ -11,6 +11,9 @@ inputs:
     description: 'The version of Cloud87 ECS Deployer to run using'
     default: 'latest'
     required: false
+  image:
+    description: "Value for --image"
+    required: false
   tag:
     description: "Value for --tag"
     required: false

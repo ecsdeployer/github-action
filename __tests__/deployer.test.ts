@@ -33,7 +33,7 @@ describe('deployerCommandArgs', () => {
     expect(cliArgs).toContain("--app-version")
     expect(cliArgs).toContain(testInputs.appVersion)
     
-    expect(cliArgs).toContain("--image-tag")
+    expect(cliArgs).toContain("--tag")
     expect(cliArgs).toContain(testInputs.imageTag)
     
     expect(cliArgs).toContain("--timeout")

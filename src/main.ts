@@ -3,7 +3,7 @@ import * as context from './context'
 import * as git from './git'
 import * as deployer from './deployer'
 import * as core from '@actions/core'
-// import * as exec from '@actions/exec'
+import * as exec from '@actions/exec'
 import * as fs from 'fs'
 import { InputNames } from './types'
 // import yargs from 'yargs'
@@ -19,62 +19,37 @@ async function run() {
     }
 
     const inputs = await context.getInputs()
+
+    if (core.isDebug()) {
+      core.startGroup("Debug: inputs dump")
+      console.log(inputs)
+      core.endGroup()
+    }
+
+    core.startGroup("Installing ECS Deployer")
     const bin = await deployer.install(inputs.deployerVersion)
     core.info(`ECSDeployer ${inputs.deployerVersion} installed successfully`)
+    core.endGroup()
 
     if (inputs.installOnly) {
       const deployerDir = path.dirname(bin)
       core.addPath(deployerDir)
       core.debug(`Added ${deployerDir} to PATH`)
       return
-    } else if (!inputs.args) {
-      core.setFailed('args input required')
-      return
     }
-
-
-    const commit = await git.getShortCommit()
-    const tag = await git.getTag()
-    // const isTagDirty = await git.isTagDirty(tag)
 
     // ensure config file exists
     if(!fs.existsSync(inputs.configPath)) {
       throw new Error(`Configuration file '${inputs.configPath}' does not exist`)
     }
 
-    // let yamlfile: string | unknown;
-    // const argv = yargs.parse(inputs.args)
-    // if (argv.config) {
-    //   yamlfile = argv.config;
-    // } else {
-    //   ['.goreleaser.yaml', '.goreleaser.yml', 'goreleaser.yaml', 'goreleaser.yml'].forEach(f => {
-    //     if (fs.existsSync(f)) {
-    //       yamlfile = f;
-    //     }
-    //   });
-    // }
-
-    // let snapshot = '';
-    // if (inputs.args.split(' ').indexOf('release') > -1) {
-    //   if (isTagDirty) {
-    //     if (!inputs.args.includes('--snapshot') && !inputs.args.includes('--nightly')) {
-    //       core.info(`No tag found for commit ${commit}. Snapshot forced`);
-    //       snapshot = ' --snapshot';
-    //     }
-    //   } else {
-    //     core.info(`${tag} tag found for commit ${commit}`);
-    //   }
-    // }
-
-    // await exec.exec(`${bin} ${inputs.args}${snapshot}`, undefined, {
-    //   env: Object.assign({}, process.env, {
-    //     GORELEASER_CURRENT_TAG: process.env.GORELEASER_CURRENT_TAG || tag || ''
-    //   }) as {
-    //     [key: string]: string;
-    //   }
-    // })
-
-
+    core.startGroup("Running Deployment")
+    await exec.exec(bin, deployer.deployerCommandArgs(inputs), {
+      env: Object.assign({}, process.env, {
+        // extras in the future
+      }) as {[key : string]: string}
+    })
+    core.endGroup()
 
   } catch (error) {
     core.setFailed(error.message)

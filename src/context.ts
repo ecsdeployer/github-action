@@ -12,6 +12,7 @@ export interface Inputs {
   configPath : string
   imageTag : string
   appVersion : string
+  imageUri : string
   installOnly : boolean
   timeout : string
 }
@@ -19,8 +20,9 @@ export interface Inputs {
 export async function getInputs(): Promise<Inputs> {
   const inputs : Inputs = {
     deployerVersion: getDeployerVersion(),
-    configPath: core.getInput(InputNames.ConfigPath, {required: true}),
+    configPath: core.getInput(InputNames.ConfigPath) || '.ecsdeployer.yml',
     imageTag: core.getInput(InputNames.ImageTag),
+    imageUri: core.getInput(InputNames.Image),
     appVersion: core.getInput(InputNames.AppVersion),
     args: core.getInput(InputNames.Args),
     timeout: core.getInput(InputNames.Timeout),
@@ -59,7 +61,7 @@ function getDeployerVersion() : string {
   return value
 }
 
-// Github's getBooleanInput is really annoying  when the value is not provided
+// Github's getBooleanInput is really annoying when the value is not provided
 function lessBrokenGetBooleanInput(name : string, defValue : boolean, options? : core.InputOptions) {
   const trueValue = ['true', 'True', 'TRUE']
   const falseValue = ['false', 'False', 'FALSE']
