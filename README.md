@@ -68,5 +68,9 @@ Name       | Type     | Description
 `install-only` | Bool | Installs ECSDeployer but does not run it (default: `false`)
 `deployer-version` | String | Use a specific version of ECSDeployer (default `latest`)
 
+## See Also
+* [ECS Deployer Documentation](https://ecsdeployer.com/)
+* [ECS Deployer: GitHub Actions](https://ecsdeployer.com/ci/github/)
+
 ## License
 MIT
