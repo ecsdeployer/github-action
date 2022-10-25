@@ -3,12 +3,24 @@ name: Update Major Tag
 on:
   release:
     types: [released]
+    
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   update:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+
+      - name: Check Tag
+        if: ${{ !startsWith(github.ref_name, 'v') }}
+        run: |
+          echo "Tag must start with v in order to update the major"
+          exit 1
+
       - uses: actions/checkout@v3
 
       - name: Update Tag
