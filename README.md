@@ -1,8 +1,8 @@
-[![GitHub release](https://img.shields.io/github/release/webdestroya/ecsdeployer-action.svg?logo=github&style=flat-square)](https://github.com/webdestroya/ecsdeployer-action/releases/latest)
-[![GitHub Marketplace](https://img.shields.io/badge/marketplace-ecsdeployer--action-blue?logo=github&style=flat-square)](https://github.com/marketplace/actions/ecsdeployer-action)
+[![GitHub release](https://img.shields.io/github/release/ecsdeployer/github-action.svg?logo=github&style=flat-square)](https://github.com/ecsdeployer/github-action/releases/latest)
+<!--[![GitHub Marketplace](https://img.shields.io/badge/marketplace-ecsdeployer-action-blue?logo=github&style=flat-square)](https://github.com/marketplace/actions/ecsdeployer-action)-->
 
-# Cloud87 ECS Deployer GitHub Action
-A [GitHub Action](https://github.com/features/actions) for [ECS Deployer](https://ecsdeployer.com/)
+# ECSDeployer GitHub Action
+A [GitHub Action](https://github.com/features/actions) for [ECSDeployer](https://ecsdeployer.com/)
 
 ## Usage
 ```yaml
@@ -46,9 +46,8 @@ jobs:
           tags: ${{ steps.login-ecr.outputs.registry }}/myapp:${{ github.ref_name }}
 
       - name: Deploy
-        uses: webdestroya/ecsdeployer-action@v1
+        uses: ecsdeployer/github-action@v1
         with:
-          config: .ecsdeployer.yml
           image: ${{ steps.login-ecr.outputs.registry }}/myapp:${{ github.ref_name }}
 ```
 
@@ -66,7 +65,7 @@ Name       | Type     | Description
 `workdir` | String | Working directory of execution (default `.`)
 `timeout` | String | Sets a timeout for the deployment (default `90m`)
 `install-only` | Bool | Installs ECSDeployer but does not run it (default: `false`)
-`deployer-version` | String | Use a specific version of ECSDeployer (default `latest`)
+`ecsdeployer-version` | String | Use a specific version of ECSDeployer (default `latest`)
 
 ## See Also
 * [ECS Deployer Documentation](https://ecsdeployer.com/)

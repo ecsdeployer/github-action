@@ -1,5 +1,5 @@
 export enum InputNames {
-  DeployerVerison = "deployer-version",
+  DeployerVerison = "ecsdeployer-version",
   Args = "extra-args",
   WorkDir = "workdir",
   InstallOnly = "install-only",

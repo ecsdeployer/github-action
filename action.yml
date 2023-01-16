@@ -1,14 +1,14 @@
 # https://help.github.com/en/articles/metadata-syntax-for-github-actions
-name: 'Cloud87 ECS Deployer Action'
-description: 'GitHub Action for Cloud87 ECS Deployer, a tool to easily deploy applications to AWS ECS'
-author: 'cloud87'
+name: 'ECSDeployer Action'
+description: 'GitHub Action for ECSDeployer, a tool to easily deploy applications to AWS ECS Fargate'
+author: 'ECSDeployer'
 branding:
   color: 'blue'
   icon: 'cloud'
 
 inputs:
-  deployer-version:
-    description: 'The version of Cloud87 ECS Deployer to run using'
+  ecsdeployer-version:
+    description: 'The version of ECSDeployer to run using'
     default: 'latest'
     required: false
   image:
@@ -35,7 +35,7 @@ inputs:
     default: '90m'
     required: false
   install-only:
-    description: 'Just install Cloud87 ECS Deployer'
+    description: 'Just install ECSDeployer'
     default: 'false'
     required: false
 
