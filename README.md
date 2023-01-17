@@ -1,5 +1,5 @@
 [![GitHub release](https://img.shields.io/github/release/ecsdeployer/github-action.svg?logo=github&style=flat-square)](https://github.com/ecsdeployer/github-action/releases/latest)
-<!--[![GitHub Marketplace](https://img.shields.io/badge/marketplace-ecsdeployer-action-blue?logo=github&style=flat-square)](https://github.com/marketplace/actions/ecsdeployer-action)-->
+<!-- [![GitHub Marketplace](https://img.shields.io/badge/marketplace-ecsdeployer--action-blue?logo=github&style=flat-square)](https://github.com/marketplace/actions/ecsdeployer-action) -->
 
 # ECSDeployer GitHub Action
 A [GitHub Action](https://github.com/features/actions) for [ECSDeployer](https://ecsdeployer.com/)
