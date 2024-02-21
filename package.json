@@ -1,6 +1,6 @@
 {
-  "name": "setup-deployer-action",
-  "description": "GitHub Action for Cloud87 Deployer, a deployment automation tool for Fargate services",
+  "name": "setup-ecsdeployer-action",
+  "description": "GitHub Action for ECSDeployer, a deployment automation tool for Fargate services",
   "main": "lib/main.js",
   "scripts": {
     "build": "ncc build src/main.ts --source-map --minify --license licenses.txt",
@@ -11,16 +11,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cloud87io/deployer-action.git"
+    "url": "git+https://github.com/ecsdeployer/github-action.git"
   },
   "keywords": [
     "actions",
-    "cloud87"
+    "ecsdeployer"
   ],
   "author": "Mitch Dempsey",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.9.1",
+    "@actions/core": "^1.10.1",
     "@actions/exec": "^1.1.1",
     "@actions/http-client": "^2.0.1",
     "@actions/tool-cache": "^2.0.1",
@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.5",
-    "@types/node": "^16.11.26",
+    "@types/node": "^20.9.0",
     "@types/semver": "^7.3.12",
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
