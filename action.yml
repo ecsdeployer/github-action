@@ -1,15 +1,15 @@
 # https://help.github.com/en/articles/metadata-syntax-for-github-actions
-name: 'ECSDeployer Action'
-description: 'GitHub Action for ECSDeployer, a tool to easily deploy applications to AWS ECS Fargate'
-author: 'ECSDeployer'
+name: "ECSDeployer Action"
+description: "GitHub Action for ECSDeployer, a tool to easily deploy applications to AWS ECS Fargate"
+author: "ECSDeployer"
 branding:
-  color: 'blue'
-  icon: 'cloud'
+  color: "blue"
+  icon: "cloud"
 
 inputs:
   ecsdeployer-version:
-    description: 'The version of ECSDeployer to run using'
-    default: 'latest'
+    description: "The version of ECSDeployer to run using"
+    default: "latest"
     required: false
   image:
     description: "Value for --image"
@@ -21,24 +21,24 @@ inputs:
     description: "Value for --app-version"
     required: false
   extra-args:
-    description: 'Additional arguments to pass to the deployer command'
+    description: "Additional arguments to pass to the deployer command"
     required: false
   config:
-    description: 'Deployment YML file for the project'
+    description: "Deployment YML file for the project"
     required: false
   workdir:
-    description: 'Working directory (below repository root)'
-    default: '.'
+    description: "Working directory (below repository root)"
+    default: "."
     required: false
   timeout:
-    description: 'Override the default timeout'
-    default: '90m'
+    description: "Override the default timeout"
+    default: "90m"
     required: false
   install-only:
-    description: 'Just install ECSDeployer'
-    default: 'false'
+    description: "Just install ECSDeployer"
+    default: "false"
     required: false
 
 runs:
-  using: 'node20'
-  main: 'dist/index.js'
+  using: "node24"
+  main: "dist/index.js"
