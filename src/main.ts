@@ -1,12 +1,10 @@
 import * as path from 'path'
 import * as context from './context'
-import * as git from './git'
 import * as deployer from './deployer'
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as fs from 'fs'
 import { InputNames } from './types'
-// import yargs from 'yargs'
 
 async function run() {
   try {

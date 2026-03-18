@@ -44,7 +44,7 @@ const VALID_TAG_REGEX = /^v?\d+\.\d+\.\d+$/
 
 function getDeployerVersion() : string {
 
-  const value = core.getInput(InputNames.DeployerVerison) || "latest"
+  const value = core.getInput(InputNames.DeployerVersion) || "latest"
 
   if(value === "latest") {
     return value
